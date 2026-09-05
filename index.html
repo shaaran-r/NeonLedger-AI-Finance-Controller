@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeonLedger AI Finance Controller</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Workspace navigation">
+        <div class="brand">
+          <span class="brand-mark">NL</span>
+          <div>
+            <strong>NeonLedger</strong>
+            <span>AI Controller</span>
+          </div>
+        </div>
+        <nav class="nav-list" aria-label="Finance loops">
+          <button class="nav-item active" type="button"><span data-icon="spark"></span>Close loop</button>
+          <button class="nav-item" type="button"><span data-icon="cash"></span>Cash desk</button>
+          <button class="nav-item" type="button"><span data-icon="shield"></span>Audit trail</button>
+          <button class="nav-item" type="button"><span data-icon="tax"></span>Tax lines</button>
+        </nav>
+        <div class="agent-card">
+          <span class="pulse"></span>
+          <p>Verification-first agent</p>
+          <strong id="agentMode">Awaiting run</strong>
+          <small>Every match is scored, explained, and reversible.</small>
+        </div>
+      </aside>
+
+      <main>
+        <header class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Finance ops command center</p>
+            <h1>Run the books and cash position in one verified loop.</h1>
+            <p>
+              A synthetic 94-record batch is reconciled across invoices, bank deposits,
+              gateway settlements, and tax lines. The controller reports its match rate,
+              cash impact, and the exceptions it refuses to invent away.
+            </p>
+          </div>
+          <div class="hero-actions" aria-label="Run controls">
+            <button class="primary-action" id="runAgent" type="button">Run close loop</button>
+            <button class="ghost-action" id="stepAgent" type="button">Step agent</button>
+          </div>
+        </header>
+
+        <section class="control-strip" aria-label="Agent settings">
+          <label>
+            Confidence floor
+            <input id="confidence" type="range" min="72" max="96" value="86" />
+            <span id="confidenceLabel">86%</span>
+          </label>
+          <label>
+            Exception pressure
+            <select id="pressure">
+              <option value="normal">Normal batch</option>
+              <option value="messy">Messy close</option>
+              <option value="strict">Audit strict</option>
+            </select>
+          </label>
+          <label class="switch">
+            <input id="autoResolve" type="checkbox" checked />
+            <span>Auto-clear low risk exceptions</span>
+          </label>
+        </section>
+
+        <section class="metrics-grid" aria-label="Close metrics">
+          <article class="metric-card">
+            <span>Batch throughput</span>
+            <strong id="throughput">0 / 94</strong>
+            <small id="throughputDetail">Ready to process</small>
+          </article>
+          <article class="metric-card">
+            <span>Verified match rate</span>
+            <strong id="matchRate">0.0%</strong>
+            <small id="matchDetail">Confidence gated</small>
+          </article>
+          <article class="metric-card">
+            <span>Net cash position</span>
+            <strong id="cashPosition">$0</strong>
+            <small id="cashDetail">After matched settlements</small>
+          </article>
+          <article class="metric-card danger">
+            <span>Open exceptions</span>
+            <strong id="exceptionCount">0</strong>
+            <small id="exceptionDetail">Honest unresolved list</small>
+          </article>
+        </section>
+
+        <section class="workspace-grid">
+          <article class="panel agent-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Autonomous close loop</p>
+                <h2>Agent trace</h2>
+              </div>
+              <span id="loopStatus" class="status-chip">Idle</span>
+            </div>
+            <div class="trace-rail" id="traceRail" aria-live="polite"></div>
+          </article>
+
+          <article class="panel network-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Multi-source reconciliation</p>
+                <h2>Match graph</h2>
+              </div>
+              <span class="status-chip blue" id="recordsScanned">0 records</span>
+            </div>
+            <div class="graph-wrap">
+              <svg id="matchGraph" role="img" aria-label="Animated reconciliation graph"></svg>
+            </div>
+          </article>
+
+          <article class="panel cash-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Forward cash forecaster</p>
+                <h2>14-day cash runway</h2>
+              </div>
+              <span id="runwayLabel" class="status-chip green">Waiting</span>
+            </div>
+            <canvas id="cashChart" width="720" height="270" aria-label="Cash forecast chart"></canvas>
+          </article>
+
+          <article class="panel exception-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Controller exceptions</p>
+                <h2>Needs human judgment</h2>
+              </div>
+              <button class="ghost-action compact" id="exportMemo" type="button">Copy memo</button>
+            </div>
+            <div class="exceptions" id="exceptions"></div>
+          </article>
+        </section>
+
+        <section class="panel ledger-panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Settlement Q&A surface</p>
+              <h2>Ask the close</h2>
+            </div>
+            <span class="status-chip" id="qaStatus">Grounded in batch</span>
+          </div>
+          <div class="qa-grid">
+            <div class="prompt-bank">
+              <button type="button" data-question="why_unmatched">Why were items unmatched?</button>
+              <button type="button" data-question="cash_risk">What threatens cash this week?</button>
+              <button type="button" data-question="tax_gap">Which tax lines need review?</button>
+            </div>
+            <div class="answer-box" id="answerBox" aria-live="polite">
+              Run the controller, then ask a settlement or exception question.
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
